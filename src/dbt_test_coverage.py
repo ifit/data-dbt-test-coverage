@@ -231,15 +231,8 @@ def compare_files(sql_models, yml_models, unique_sql_folders, doc_thresh, test_t
     logging.debug(f" TOTAL\n\n")
     docs_perc = round((docs_agg / models_agg) * 100)
     test_perc = round((test_agg / models_agg) * 100)
-
-    logging.info(
-        f" Models: {models_agg: <{model_agg_col_width}}"
-        f" Docs: {docs_agg} ({docs_perc}%) "
-        f" Tests: {test_agg} ({test_perc}%)"
-        f""
-    )
-
     error_flag = False
+
     if docs_perc < doc_thresh:
         logging.info(
             f" Documentation not meeting minimum coverage:"
@@ -253,8 +246,18 @@ def compare_files(sql_models, yml_models, unique_sql_folders, doc_thresh, test_t
         )
         error_flag = True
 
+    logging.info(
+        f" Models: {models_agg: <{model_agg_col_width}}"
+        f" Docs: {docs_agg} ({docs_perc}%) "
+        f" Tests: {test_agg} ({test_perc}%)"
+        f""
+    )
+
     if error_flag and logging.root.level == logging.INFO:
         sys.exit(1)
+
+    return [models_agg, docs_agg, test_agg]
+
 
 def test_coverage(path, recursive=True, doc_thresh=0, test_thresh=0):
     if recursive:
@@ -305,7 +308,7 @@ def test_coverage(path, recursive=True, doc_thresh=0, test_thresh=0):
             pass
 
     try:
-        compare_files(sql_models, yml_models, unique_sql_folders, doc_thresh, test_thresh)
+        return compare_files(sql_models, yml_models, unique_sql_folders,doc_thresh, test_thresh)
     except SystemExit:
         raise
     except:

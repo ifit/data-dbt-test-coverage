@@ -1,14 +1,26 @@
 # dbt-test-coverage
+
+Forked from:  for the iFit dbt repo.
+
 cli tool for showing test coverage in [dbt](https://www.getdbt.com) projects.
 
 Tested with dbt 0.15 and newer!
 
 Install with pip:
 
-    pip install git+https://github.com/mikaelene/dbt-test-coverage.git
+    pip install git+https://github.com/ifit/data-dbt-test-coverage.git
 
- 
 ## Usage
+Right now this is only really used in the analytics-dbt repo. You pass in a folder for the PR, and a folder for the master branch. The code will compare how many models/tests/docs were added to ensure that new tests/docs are being created for each PR. 
+
+Example: 
+
+	dbt-test-coverage --pr ../analytics-dbt/models --master ../analytics-dbt-master/models --doc_thresh 90 --test_thresh 50
+
+This will ensure that the 90 percent of models have docs, and 50% of models have tests.
+
+
+## Misc usage
 Go to the folder where you have your dbt schema definitions (your yml-files). To search recursive (the folder you are in and all below) type:
 
     dbt-test-coverage
