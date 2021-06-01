@@ -13,7 +13,7 @@ def main():
     parser.add_argument(
         "--pr",
         help="Folder with PR models",
-   		required=True
+        required=True
     ) 
     parser.add_argument(
         "--master",
